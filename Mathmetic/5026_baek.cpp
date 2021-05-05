@@ -7,16 +7,18 @@ int main(void){
 	int t;
 	cin >> t;
 	cin.ignore();
+	
 	while(t--){
-		string num;
-		string temp = "";
-		int sum = 0;
-		
-		getline(cin, num);
-		
-		for(int i = 0;i < num.length();i++){
-			if(isdigit(num[i])){
-				temp += num[i];
+		string formula, temp = "";
+		getline(cin, formula);
+		if(formula == "P=NP"){
+			cout << "skipped" << '\n';
+			continue;
+		}
+		int len = formula.length(), sum = 0;
+		for(int i = 0;i < len;i++){
+			if(isdigit(formula[i])){
+				temp += formula[i];
 			}
 			else{
 				sum += stoi(temp);
