@@ -4,7 +4,7 @@ using namespace std;
 int main(void){
 	ios::sync_with_stdio(0);
 	cin.tie(0);
-	char ans[10005];
+	char ans[10005] = {0};
 	string s, temp = "";
 	
 	while(getline(cin, s))
@@ -17,7 +17,14 @@ int main(void){
 	char *ps = ans;
 	
 	int total = 0;
-	while(*ps != '\0')
-		cout << *(ps++);
+	while(*ps != '\0'){
+		total += stoi(ps);
+		
+		while(isdigit(*ps))
+			ps++;
+		ps++;
+	}
+	
+	cout << total;
 	return 0;
 }
