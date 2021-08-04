@@ -4,7 +4,7 @@ using namespace std;
 string s[1005];
 
 char what_max(int a, int t, int g, int c){
-	int temp = max(a, max(t, max(g, c)));
+	int temp = max({a, t, g, c});
 	
 	if(temp == a)
 		return 'A';
@@ -19,6 +19,7 @@ char what_max(int a, int t, int g, int c){
 int main(void){
 	ios::sync_with_stdio(0);
 	cin.tie(0);
+	
 	int n, m;
 	cin >> n >> m;
 	
