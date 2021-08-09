@@ -9,6 +9,7 @@ int main(void){
 	int n;
 	cin >> n;
 	memset(digit, true, sizeof(digit));
+	
 	for(int i = 123;i <= 999;i++){
 		string temp = to_string(i);
 		if(temp[0] == temp[1] || temp[0] == temp[2] || temp[1] == temp[2])
@@ -20,17 +21,18 @@ int main(void){
 	while(n--){
 		int num, s, b;
 		cin >> num >> s >> b;
+		
 		for(int i = 123;i <=999;i++){
 			int s_cnt = 0;
 			int b_cnt = 0;
 			if(digit[i]){
-				string first = to_string(num);
-				string second = to_string(i);
+				string s_num = to_string(num);
+				string s_i = to_string(i);
 				for(int j = 0;j < 3;j++){
 					for(int k = 0;k < 3;k++){
-						if(j == k && first[j] == second[k])
+						if(j == k && s_num[j] == s_i[k])
 							s_cnt++;
-						else if(j != k && first[j] == second[k])
+						else if(j != k && s_num[j] == s_i[k])
 							b_cnt++;
 					}
 				}
