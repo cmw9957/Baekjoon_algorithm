@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+//시간복잡도 O(n^2)
 int main(void)
 {
 	ios::sync_with_stdio(0);
