@@ -73,7 +73,6 @@ int main(void){
 						func(num);
 					}
 				}
-				
 			}
 		}
 		if(boom) ans_cnt++;

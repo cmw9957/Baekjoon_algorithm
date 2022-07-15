@@ -6,19 +6,25 @@ using namespace std;
 
 int n, m, ans = 0x7f7f7f7f;
 pair<int, int> red, blue, hole;
+pair<int, int> tempR, tempB;
 char box[12][12];
+char box2[12][12];
 
 //위, 오른, 아래, 왼 
 int dx[] = {-1, 0, 1, 0};
 int dy[] = {0, 1, 0, -1};
 
-pair<int, int> move(pair<int, int> m, int dir){
+pair<int, int> move(pair<int, int> m, int dir, int op){
 	while(1){
 		int nx = m.X + dx[dir];
 		int ny = m.Y + dy[dir];
 		
+		if(box[nx][ny] == 'O'){
+			m.X = nx; m.Y = ny;
+			return m;
+		}
 		if(box[nx][ny] != '.') return m;
-		m.X = nx; m.Y = n.Y;
+		m.X = nx; m.Y = ny;
 	}
 }
 
@@ -27,33 +33,55 @@ pair<int, int> move(pair<int, int> m, int dir){
 //왼쪽으로갈때 더 왼쪽에 있는거, 빨강, 파랑 좌표로 판단한다. 
 void func(pair<int, int> r, pair<int, int> b, int dir, int cnt){
 	if(cnt > 10) return ;
-	
 	if(dir == 0){
 		if(r.X < b.X){
-			move(r, dir);
-			move(b, dir);
+			tempR = move(r, dir, 1);
+			tempB = move(b, dir, 0);
 		}
 		else{
-			move(b, dir);
-			move(r, dir);
+			tempB = move(b, dir, 0);
+			tempR = move(r, dir, 1);
 		}
 	}
 	else if(dir == 1){
 		if(r.Y < b.Y){
-			move(b, dir);
-			move(r, dir);
+			tempB = move(b, dir, 0);
+			tempR = move(r, dir, 1);
 		}
 		else{
-			move(r, dir);
-			move(b, dir);
+			tempR = move(r, dir, 1);
+			tempB = move(b, dir, 0);
 		}
 	}
 	else if(dir == 2){
-		
+		if(r.X < b.X){
+			tempB = move(b, dir, 0);
+			tempR = move(r, dir, 1);
+		}
+		else{
+			tempR = move(r, dir, 1);
+			tempB = move(b, dir, 0);
+		}
 	}
 	else if(dir == 3){
-		
+		if(r.Y < b.Y){
+			tempR = move(r, dir, 1);
+			tempB = move(b, dir, 0);
+		}
+		else{
+			tempB = move(b, dir, 0);
+			tempR = move(r, dir, 1);
+		}
 	}
+	
+	if(tempR == r && tempB == b) return ;
+	if(tempB == hole) return ;
+	if(tempR == hole){
+		ans = min(ans, cnt);
+		return ;
+	}
+	for(int i = 0;i < 4;i++)
+		func(r, b, i, cnt + 1);
 }
 
 int main(void)
@@ -66,16 +94,16 @@ int main(void)
 		for(int j = 0;j < m;j++){
 			cin >> box[i][j];
 			if(box[i][j] == 'R')
-				red = make_pair({i, j});
+				red = make_pair(i, j);
 			else if(box[i][j] == 'B')
-				blue = make_pair({i, j});
+				blue = make_pair(i, j);
 			else if(box[i][j] == 'O')
-				hole = make_pair({i, j});
+				hole = make_pair(i, j);
 		}
 	}
 	
 	for(int i = 0;i < 4;i++)
-		func(red, blue, i, 0);
+		func(red, blue, i, 1);
 	
 	
 	if(ans == 0x7f7f7f7f)
